@@ -1,7 +1,7 @@
 services:
   vhs-test-database:
     container_name: vhs-test-database
-    image: postgres:15.1-alpine
+    image: postgres:16-alpine
     ports:
       - '5432:5432'
     environment:
