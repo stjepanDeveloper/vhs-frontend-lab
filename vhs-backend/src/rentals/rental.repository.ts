@@ -1,15 +1,23 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 
 import { Rental } from './entities/rental.entity';
 import { UpdateRentalDto } from './dto/update-rental.dto';
 import { Vhs } from 'src/vhs/entities/vhs.entity';
 import { User } from 'src/auth/entities/user.entity';
 import { GetRentalsFilterDto } from './dto/get-rentals-filter.dto';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
-@EntityRepository(Rental)
+@Injectable()
 export class RentalRepository extends Repository<Rental> {
   private readonly LATE_FEE_COEFFICIENT = 20;
+
+  constructor(private dataSource: DataSource) {
+    super(Rental, dataSource.createEntityManager());
+  }
 
   async getRentals(rentalFilterDto: GetRentalsFilterDto): Promise<Rental[]> {
     const { userId } = rentalFilterDto;
@@ -77,7 +85,7 @@ export class RentalRepository extends Repository<Rental> {
   }
 
   async deleteRental(id: number): Promise<void> {
-    const rental = await this.findOne(id);
+    const rental = await this.findOne({ where: { id } });
 
     if (rental) {
       const vhs = rental.vhs;

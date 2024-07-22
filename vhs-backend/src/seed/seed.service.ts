@@ -1,7 +1,7 @@
 import { Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
-import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
+import { InjectDataSource } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
-import { Connection } from 'typeorm';
+import { DataSource } from 'typeorm';
 
 import { VhsRepository } from '../vhs/vhs.repository';
 import { vhs } from './fixtures/vhs';
@@ -12,12 +12,12 @@ export class SeedService implements OnApplicationBootstrap {
 
   constructor(
     private configService: ConfigService,
-    @InjectConnection() private readonly connection: Connection,
-    @InjectRepository(VhsRepository) private vhsRepository: VhsRepository,
+    private vhsRepository: VhsRepository,
+    @InjectDataSource() private readonly dataSource: DataSource,
   ) {}
 
-  getDbHandle(): Connection {
-    return this.connection;
+  getDbHandle(): DataSource {
+    return this.dataSource;
   }
 
   async onApplicationBootstrap() {
