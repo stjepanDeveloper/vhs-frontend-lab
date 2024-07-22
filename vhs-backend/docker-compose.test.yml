@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   vhs-test-database:
     container_name: vhs-test-database

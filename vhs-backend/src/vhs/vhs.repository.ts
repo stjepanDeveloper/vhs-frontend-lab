@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 
 import { Vhs } from './entities/vhs.entity';
 import { CreateVhsDto } from './dto/create-vhs.dto';
@@ -6,9 +6,14 @@ import { UpdateVhsDto } from './dto/update-vhs.dto';
 import { GetVhsFilterDto } from './dto/get-vhs-filter.dto';
 
 import * as fs from 'fs';
+import { Injectable } from '@nestjs/common';
 
-@EntityRepository(Vhs)
+@Injectable()
 export class VhsRepository extends Repository<Vhs> {
+  constructor(private dataSource: DataSource) {
+    super(Vhs, dataSource.createEntityManager());
+  }
+
   async getAllVhs(vhsFilterDto: GetVhsFilterDto): Promise<Vhs[]> {
     const { title, description, genre, isAvailable } = vhsFilterDto;
     const query = this.createQueryBuilder('vhs');
@@ -96,11 +101,13 @@ export class VhsRepository extends Repository<Vhs> {
     if (quantity) vhs.quantity = quantity;
 
     if (thumbnail) {
-      fs.unlink(vhs.thumbnail, (error) => {
-        if (error) {
-          throw error;
-        }
-      });
+      if (vhs.thumbnail) {
+        fs.unlink(vhs.thumbnail, (error) => {
+          if (error) {
+            throw error;
+          }
+        });
+      }
 
       vhs.thumbnail = thumbnail.path;
     }

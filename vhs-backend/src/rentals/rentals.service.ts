@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 
 import { Rental } from './entities/rental.entity';
 import { RentalRepository } from './rental.repository';
@@ -12,11 +11,8 @@ import { GetRentalsFilterDto } from './dto/get-rentals-filter.dto';
 @Injectable()
 export class RentalsService {
   constructor(
-    @InjectRepository(RentalRepository)
     private rentalRepository: RentalRepository,
-    @InjectRepository(VhsRepository)
     private vhsRepository: VhsRepository,
-    @InjectRepository(UserRepository)
     private userRepository: UserRepository,
   ) {}
 
@@ -25,7 +21,7 @@ export class RentalsService {
   }
 
   async getRentalById(id: number): Promise<Rental> {
-    const rental = await this.rentalRepository.findOne(id);
+    const rental = await this.rentalRepository.findOne({ where: { id } });
 
     if (!rental) {
       throw new NotFoundException(`Rental with ID ${id} not found`);
@@ -35,8 +31,13 @@ export class RentalsService {
   }
 
   async createRental(createRentalDto: CreateRentalDto): Promise<Rental> {
-    const vhs = await this.vhsRepository.findOne(createRentalDto.vhsId);
-    const user = await this.userRepository.findOne(createRentalDto.userId);
+    const vhs = await this.vhsRepository.findOne({
+      where: { id: createRentalDto.vhsId },
+    });
+
+    const user = await this.userRepository.findOne({
+      where: { id: createRentalDto.userId },
+    });
 
     return this.rentalRepository.createRental(user, vhs);
   }

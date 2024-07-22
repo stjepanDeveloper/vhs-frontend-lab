@@ -2,7 +2,7 @@ FROM registry.access.redhat.com/ubi8/ubi
 
 LABEL name="VHS Rental System" maintainer="Ivan Skorupan <ivan.skorupan@fer.hr>"
 
-ENV NODEJS_VERSION=16
+ENV NODEJS_VERSION=22
 ENV DATABASE_URL=postgres://postgres:postgres@vhs-database/vhs-database
 
 WORKDIR /usr/src/app

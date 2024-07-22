@@ -1,8 +1,9 @@
 import {
   InternalServerErrorException,
   ConflictException,
+  Injectable,
 } from '@nestjs/common';
-import { Repository, EntityRepository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
@@ -10,8 +11,12 @@ import { User } from './entities/user.entity';
 import { UserRole } from './entities/user.role.enum';
 import { JwtPayload } from './jwt-payload.interface';
 
-@EntityRepository(User)
+@Injectable()
 export class UserRepository extends Repository<User> {
+  constructor(private dataSource: DataSource) {
+    super(User, dataSource.createEntityManager());
+  }
+
   async signUp(
     authCredentialsDto: AuthCredentialsDto,
     role?: UserRole,
@@ -40,7 +45,7 @@ export class UserRepository extends Repository<User> {
     authCredentialsDto: AuthCredentialsDto,
   ): Promise<JwtPayload> {
     const { username, password } = authCredentialsDto;
-    const user = await this.findOne({ username });
+    const user = await this.findOne({ where: { username } });
 
     if (user && (await user.validatePassword(password))) {
       return { id: user.id, username: user.username, role: user.role };

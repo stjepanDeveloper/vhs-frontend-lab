@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 
 import { CreateVhsDto } from './dto/create-vhs.dto';
 import { UpdateVhsDto } from './dto/update-vhs.dto';
@@ -11,17 +10,14 @@ import * as fs from 'fs';
 
 @Injectable()
 export class VhsService {
-  constructor(
-    @InjectRepository(VhsRepository)
-    private vhsRepository: VhsRepository,
-  ) {}
+  constructor(private vhsRepository: VhsRepository) {}
 
   getAllVhs(vhsFilterDto: GetVhsFilterDto): Promise<Vhs[]> {
     return this.vhsRepository.getAllVhs(vhsFilterDto);
   }
 
   async getVhsById(id: number): Promise<Vhs> {
-    const vhs = await this.vhsRepository.findOne(id);
+    const vhs = await this.vhsRepository.findOne({ where: { id } });
 
     if (!vhs) {
       throw new NotFoundException(`VHS with ID ${id} not found.`);
@@ -52,17 +48,20 @@ export class VhsService {
   }
 
   async deleteVhs(id: number): Promise<void> {
-    const vhs = await this.vhsRepository.findOne(id);
+    const vhs = await this.vhsRepository.findOne({ where: { id } });
 
     if (!vhs) {
       throw new NotFoundException(`VHS with ID ${id} not found.`);
     }
 
     await this.vhsRepository.delete(id);
-    fs.unlink(vhs.thumbnail, (error) => {
-      if (error) {
-        throw error;
-      }
-    });
+
+    if (vhs.thumbnail) {
+      fs.unlink(vhs.thumbnail, (error) => {
+        if (error) {
+          throw error;
+        }
+      });
+    }
   }
 }
