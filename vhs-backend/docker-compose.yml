@@ -1,13 +1,18 @@
 services:
-  # vhs-rental:
-  #   container_name: vhs-rental
-  #   build: .
-  #   ports:
-  #     - '3000:3000'
-  #   depends_on:
-  #     - vhs-database
-  #   links:
-  #     - vhs-database
+  vhs-rental:
+    container_name: vhs-rental
+    build: .
+    ports:
+      - '3000:3000'
+    depends_on:
+      - vhs-database
+    links:
+      - vhs-database
+    environment:
+      SEED_DB: 1
+      JWT_SECRET: topSecret51
+      DATABASE_URL: postgres://postgres:postgres@vhs-database/vhs-database
+      TEST_DATABASE_URL: postgres://postgres:postgres@localhost/vhs-test-database
 
   vhs-database:
     container_name: vhs-database
