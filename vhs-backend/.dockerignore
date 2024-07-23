@@ -4,3 +4,4 @@ Dockerfile
 Dockerfile.nexus
 docker-compose.yml
 docker-compose.test.yml
+.env
