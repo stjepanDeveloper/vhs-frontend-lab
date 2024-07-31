@@ -1,0 +1,376 @@
+/* Styling za glavni container */
+
+.catalogue-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(241deg, #0D1E2C 0%, #2B6492 86%);
+    overflow: hidden;
+}
+
+/* Styling za header i navbar */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 75px;
+    background: #FF00A6;
+    padding: 0 20px;
+    z-index: 1000;
+}
+
+.header-title {
+    color: #FFEC00;
+    font-size: 30px;
+    font-family: 'Outrun future', sans-serif;
+    font-weight: 700;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.svg-logo {
+    height: 39px;
+    transition: transform 0.3s ease;
+    margin-right: auto;
+}
+
+.svg-logo:hover {
+    animation: wiggle 0.5s ease-in-out infinite;
+}
+
+.search-icon {
+    margin-right: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.search-icon:hover,
+.contact-button:hover {
+    transform: scale(1.10);
+}
+
+.search-icon:active,
+.contact-button:active {
+    transform: scale(0.95);
+}
+
+.search-input {
+    height: 30px;
+    width: 200px;
+    margin-right: 20px;
+}
+
+.contact-button {
+    background: #00CFFD;
+    border-radius: 20px;
+    padding: 10px 20px;
+    transition: transform 0.3s ease;
+    margin-right: 20px;
+}
+
+.contact-link {
+    color: #FFEC00;
+    text-decoration: none;
+}
+
+
+/* Konzola container styling */
+
+.catalogue-menu-group-centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: #00CFFD;
+    border-radius: 10px;
+    z-index: 1000;
+    flex: 2;
+    padding: 10px;
+    position: relative;
+    margin-bottom: 10px;
+    
+}
+
+.pane-title {
+    width: 447px;
+    height: 49px;
+    color: #FFEC00;
+    font-size: 30px;
+    font-family: 'Outrun future';
+    font-weight: 400;
+    text-align: 'center';
+    z-index: 1001;
+    margin-bottom: 15px;
+}
+
+.separator-line {
+    height: 1px;
+    border-top: 1px solid #FFEC00;
+    width: 100%;
+    z-index: 1001;
+}
+
+.add-vhs-icon {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(194, 227, 178, 0.2);
+    transition: background-color 0.3s;
+
+}
+
+.add-vhs-icon:hover {
+    background-color: #FFEC00;
+}
+
+.console-display { 
+    display: flex;
+    width: 100%;
+    flex-grow: 1;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pagination-controls {
+    position: absolute;
+    top: 750px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    z-index: 1002;
+}
+
+.pagination-controls span {
+    color: #FFEC00;
+    font-family: 'ArcadeClassic', sans-serif;
+    font-size: 20px;
+}
+
+.arrow-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.arrow-active {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.item-list {
+    margin-top: 50px;
+}
+
+.item-list li {
+    padding-bottom: 8px;
+    color: #FF00A6;
+}
+
+.item-list li a {
+    font-family: 'ArcadeClassic', sans-serif;
+    color: #FFEC00;
+    font-size: 20px;
+    transition: color 0.3s ease;
+}
+
+.item-list li a:hover {
+    color: #39FF14;
+}
+
+.item-list li a:active {
+    color: #FF00A6;
+}
+
+/* Styling za footer */
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    background: #FF00A6;
+}
+
+.footer-content {
+    color: #FFEC00;
+    font-size: 20px;
+    font-family: 'ArcadeClassic', sans-serif;
+    font-weight: 700;
+    text-align: right;
+    padding: 15px 30px 0 0;
+}
+
+
+/* Ostali elementi */
+
+.cookie-icon {
+    position: absolute;
+    bottom: 60px;
+    right: 30px;
+    z-index: 1000;
+}
+
+.cookie-icon svg {
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.cookie-icon svg:hover {
+    animation: spin 2s linear infinite;
+}
+
+
+/* Animacije */
+
+@keyframes wiggle {
+
+    0%,
+    100% {
+        transform: rotate(-5deg);
+    }
+
+    50% {
+        transform: rotate(5deg);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Media queries za razlicite velicine ekrana */
+
+@media only screen and (max-width: 1024px) {
+    .header {
+        height: 75px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0 10px;
+    }
+
+    .header-title {
+        font-size: 20px;
+        position: relative;
+        left: 15px;
+    }
+
+    .svg-logo {
+        margin-left: 15px;
+    }
+
+
+    .contact-button {
+        right: 20px;
+    }
+
+
+    .pane-title {
+        font-size: 25px;
+        transform: translateX(10%);
+    }
+
+    .catalogue-menu-group-centered {
+        display: flex;
+        flex: 1;
+        max-width: 600px;
+        min-width: 300px;
+        width: 80%;
+        padding: 5px;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .item-list li a {
+        font-size: 16px;
+    }
+
+    .footer-content {
+        font-size: 16px;
+        position: static;
+        text-align: center;
+    }
+
+    .left-pane,
+    .right-pane {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        height: auto;
+        justify-content: center;
+    }
+
+    .header-title,
+    .contact-button,
+    .search-icon {
+        margin-bottom: 10px;
+    }
+
+    .svg-logo {display: none;}
+
+    .search-input {
+        width: 50%;
+        margin: 10px 0;
+    }
+
+    .catalogue-menu-group-centered {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 5px;
+        max-width: 500px;
+        min-width: 200px;
+        justify-content: center;
+        
+    }
+
+    .pane-title {
+        font-size: 20px;
+        transform: translateX(20%);
+    }
+
+
+    .item-list {
+        padding: 0;
+        margin-top: 20px;
+    }
+
+    .footer {
+        flex-direction: column;
+        padding: 10px 0;
+        height: 35px;
+
+    }
+
+    .footer-content {
+        text-align: center;
+        padding: 0;
+    }
+
+
+}
