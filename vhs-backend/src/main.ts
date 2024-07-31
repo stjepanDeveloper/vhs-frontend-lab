@@ -10,13 +10,6 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.useStaticAssets(join(__dirname, '..', 'public'), { prefix: '/public/' });
 
-  app.enableCors({
-    origin: 'http://localhost:3002',  // Adjust the port to match your frontend application
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    preflightContinue: false,
-    optionsSuccessStatus: 204
-  });
-
   const config = new DocumentBuilder()
     .setTitle('True North VHS API')
     .setDescription('True North VHS API Overview')
